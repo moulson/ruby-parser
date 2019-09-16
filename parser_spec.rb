@@ -2,9 +2,9 @@ require './parser.rb'
 
 describe "parser" do
     it "Outputs an error if no parameters are supplied" do
-        parser = Parser.new
-        #Supply no parameters
-        expect {parser.main}.to output("Please provide the path to your log")
+        #Supply no parameter
+        ARGV[0] = nil #rspec sets this arg so we set it back to nil for this test
+        expect {Parser.main}.to output("Please provide the path to your log\n").to_stdout
     end
 
     it "Receives a log as an argument"
@@ -13,11 +13,8 @@ describe "parser" do
 
     it "returns a list of webpages with most *unique* page views ordered from most to least"
 
-    it "ignores other arguments"
-
     it "returns an error if logfile is invalid" do
-        parser = Parser.new
         ARGV[0] = "nonexistantpath.example"
-        expect {parser.main}.to output("Error: File 'nonexistantpath.example' not found, please check the path is correct and try again").to_stdout
+        expect {Parser.main}.to output("Error: File 'nonexistantpath.example' not found, please check the path is correct and try again\n").to_stdout
     end
 end
